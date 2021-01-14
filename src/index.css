@@ -3,10 +3,7 @@
   padding: 0px;
 }
 
-body {
-  
-  overflow: hidden !important;
-}
+
 
 .context {
   width: 100%;
@@ -20,11 +17,11 @@ body {
   font-size: 50px;
 }
 
-.area {
-  background: #4e54c8;
+body {
+  background: #4e54c8 repeat-y;
   background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   width: 100%;
-  min-height: 100vh;
+  min-height: 100% !important;
 
 }
 

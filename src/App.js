@@ -1,23 +1,26 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
-import Form from './Components/Form';
+import BlogDetails from './Components/BlogDetails';
+
 import Home from './Components/Home';
 
 const App = () => {
   return (
     <React.Fragment>
-      <div class="context">
+
+      <div className="area">
+      <div className="context">
         <section className="container">
-          <Form />
-          <div className="row">
-            <h3 className="mt-4 mb-4 ml-3">Results: </h3>
-          </div>
-          <Home />
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/details" component={BlogDetails} />
+            </Switch>
+          </Router>
         </section>
       </div>
-
-      <div class="area">
-        <ul class="circles">
+        <ul className="circles">
           <li></li>
           <li></li>
           <li></li>

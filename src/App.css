@@ -12,6 +12,7 @@ body {
   padding: 0;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   overflow: scroll;
+  overflow-x: hidden;
   color: white !important;
 }
 
@@ -131,7 +132,7 @@ header .count {
 .col.right {
   width: 30% !important;
   position: absolute !important;
-  right: 0 !important;
+  right: -40% !important;
   top: calc(50% - 30px) !important;
 }
 
@@ -340,31 +341,36 @@ header .count {
   }
 }
 form {
-  min-width: 100% !important;
+  min-width: 98% !important;
+  position: static;
 }
 
 .products {
   margin-left: 10px !important;
+  max-height: 10% !important;
 }
 .description {
   color: #000000 !important;
 }
 
 .card {
-  box-shadow: 5px 5px 2px 0px #ffffff4d !important;
+  box-shadow: 5px 5px 15px #00000049, -5px -5px 15px #00000049 !important;
   border-radius: 10px !important;
   color: #000000 !important;
   background-color: #ffffff8a !important;
   min-height: 200px !important;
   min-width: 100% !important;
   transition: all 0.15s linear !important;
+  border: 1px solid #16cc9b;
+  cursor: pointer;
 }
 .card:hover {
-  background-color: #f58551 !important;
+  background-color: #f58551de !important;
 }
 
 .suggestion-button {
   /* all: unset; */
+  
   border-radius: 13px !important;
   font-size: 24px !important;
   background-color: white !important;
@@ -373,4 +379,8 @@ form {
   border: 2px solid #16cc9b !important;
   justify-items: center !important;
   margin-right: 10px !important;
+}
+
+.header{
+  position: sticky !important;
 }
