@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Form = () => {
+const Form = ({ fetchData }) => {
+  const [tag, setTag] = useState('');
+
   return (
     <React.Fragment>
-      <form className="promotion mb-3">
-        <input type="text" placeholder="Enter tag" />
+      <form
+        className="promotion mb-3"
+        onSubmit={e => {
+          e.preventDefault();
+          fetchData(tag);
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Enter tag"
+          value={tag}
+          onChange={e => setTag(e.target.value)}
+        />
         <button type="submit" />
       </form>
-
-      <div className="row ml-1">
-        <button className="suggestion-button">Cooking</button>
-        <button className="suggestion-button">Gaming</button>
-        <button className="suggestion-button">Driving</button>
-      </div>
     </React.Fragment>
   );
 };

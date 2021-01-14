@@ -17,14 +17,7 @@ body {
 }
 
 
-a {
-  text-decoration: none;
-  color: #333333;
-}
 
-a:hover {
-  color: #f58551;
-}
 
 button {
   background-color: #16cc9b !important;
@@ -371,16 +364,16 @@ form {
 .suggestion-button {
   /* all: unset; */
   
-  border-radius: 13px !important;
-  font-size: 24px !important;
-  background-color: white !important;
-  color: black !important;
-  width: 150px !important;
-  border: 2px solid #16cc9b !important;
-  justify-items: center !important;
+  margin-top: 5px;
   margin-right: 10px !important;
 }
 
 .header{
   position: sticky !important;
+}
+
+.blog-title{
+  text-shadow: 5px 5px 15px #00000049, -5px -5px 15px #00000049 !important;
+  font-weight: 600;
+  font-size: 36px;
 }

@@ -1,53 +1,90 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { PulseLoader } from 'react-spinners';
+import { local, heroku } from '../config.json';
 import Form from './Form';
 
-const Home = () => {
-  const [blogs, setBlogs] = useState([]);
+const Home = ({ blogs, setBlogs }) => {
+  const [loading, setLoading] = useState(false);
+  // const location = useLocation();
 
-  const fetchData = () => {
+  let start, end;
+  const fetchData = tag => {
+    setLoading(true);
+    start = Date.now();
+    console.log(tag);
     axios
-      .get('http://localhost:8000/api/v1/medium/tag/cooking')
-      .then(res => setBlogs(res.data.data))
+      .get(`${heroku}/api/v1/medium/tag/${tag}`)
+      .then(res => {
+        end = Date.now();
+        console.log(end - start);
+        setLoading(false);
+        setBlogs(res.data.data);
+      })
       .catch(err => console.log(err));
   };
-
-  const getBlog = url => {
-    console.log(url);
-  };
-
-  useEffect(() => fetchData(), []);
-
-  return (
-    <React.Fragment>
-      <div className="header" >
-        <Form />
-        <div className="row">
-          <h3 className="mt-4 mb-4 ml-3">Results: </h3>
+  if (loading === true) {
+    return (
+      <React.Fragment>
+        <div className="header">
+          <Form fetchData={fetchData} />
+          <div className="row"></div>
         </div>
-      </div>
-      <div className="products">
-        <ul>
-          {blogs.map(blog => (
-            <li className="row card mb-4" onClick={()=>getBlog(blog.blogurl)} key={blog.id}>
-              <div className="col left">
-                <div className="detail">
-                  <div className="name">
-                    <h2>{blog.title}</h2>
+        <h2>Crawling...</h2>
+        <PulseLoader
+          loading={loading}
+          height={70}
+          radius={20}
+          width={5}
+          margin={3}
+          color="#ffffff"
+        />
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <React.Fragment>
+        <div className="header">
+          <Form fetchData={fetchData} />
+          <div className="row"></div>
+        </div>
+        <div className="products">
+          <ul>
+            {blogs.map(blog => (
+              <Link
+                to={{
+                  pathname: '/details',
+                  state: {
+                    heroku: blog.blogheroku,
+                    details: blog.details,
+                    creator: blog.creator,
+                    title: blog.title,
+                  },
+                }}
+                key={blog.id}
+              >
+                <li className="row card mb-4">
+                  <div className="col left">
+                    <div className="detail">
+                      <div className="name">
+                        <h2>{blog.title}</h2>
+                      </div>
+                      <div className="description">By {blog.creator}</div>
+                    </div>
+                    <div className="col right">
+                      <div className="price">{blog.details.split(',')[0]}</div>
+                      <div className="price">{blog.details.split(',')[1]}</div>
+                    </div>
                   </div>
-                  <div className="description">By {blog.creator}</div>
-                </div>
-                <div className="col right">
-                  <div className="price">{blog.details.split(',')[0]}</div>
-                  <div className="price">{blog.details.split(',')[1]}</div>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </React.Fragment>
-  );
+                </li>
+              </Link>
+            ))}
+          </ul>
+        </div>
+      </React.Fragment>
+    );
+  }
 };
 
 export default Home;
