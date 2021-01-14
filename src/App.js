@@ -1,25 +1,51 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Form from './Components/Form';
+import Home from './Components/Home';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <div class="context">
+        <section className="container">
+          <Form />
+          <div className="row">
+            <h3 className="mt-4 mb-4 ml-3">Results: </h3>
+          </div>
+          <Home />
+        </section>
+      </div>
+
+      <div class="area">
+        <ul class="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    </React.Fragment>
   );
-}
+};
 
 export default App;
