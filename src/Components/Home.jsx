@@ -15,12 +15,13 @@ const Home = ({ blogs, setBlogs }) => {
     start = Date.now();
     console.log(tag);
     axios
-      .get(`${heroku}/api/v1/medium/tag/${tag}`)
+      .get(`${local}/api/v1/medium/tag/${tag}`)
       .then(res => {
         end = Date.now();
         console.log(end - start);
         setLoading(false);
         setBlogs(res.data.data);
+        console.log(JSON.stringify(blogs));
       })
       .catch(err => console.log(err));
   };
@@ -56,7 +57,7 @@ const Home = ({ blogs, setBlogs }) => {
                 to={{
                   pathname: '/details',
                   state: {
-                    heroku: blog.blogheroku,
+                    url: blog.blogurl,
                     details: blog.details,
                     creator: blog.creator,
                     title: blog.title,
@@ -69,6 +70,7 @@ const Home = ({ blogs, setBlogs }) => {
                     <div className="detail">
                       <div className="name">
                         <h2>{blog.title}</h2>
+                        
                       </div>
                       <div className="description">By {blog.creator}</div>
                     </div>

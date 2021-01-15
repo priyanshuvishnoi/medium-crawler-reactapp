@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { PulseLoader } from 'react-spinners';
+import qs from 'querystring';
 import { heroku, local } from '../config.json';
 
 const BlogDetails = () => {
@@ -11,16 +12,17 @@ const BlogDetails = () => {
   const [para, setPara] = useState({ paragraph: [] });
   const [loading, setLoading] = useState(false);
 
-  const fetchBlogs = () => {
-    const d = JSON.stringify({ blogUrl: url });
+  const fetchBlogs = url => {
+    console.log(url);
+    const d = qs.stringify({ blogUrl: url });
     let axiosConfig = {
       method: 'post',
-      url: heroku + '/api/v1/medium/crawlBlogs',
+      url: local + '/api/v1/medium/crawlBlogs',
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      data: d,
+      data: { blogUrl: url },
     };
 
     setLoading(true);
@@ -34,7 +36,7 @@ const BlogDetails = () => {
       .catch(err => console.log(err));
   };
 
-  useEffect(fetchBlogs, [url]);
+  useEffect(() => fetchBlogs(url), [url]);
 
   return (
     <React.Fragment>
