@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { PulseLoader } from 'react-spinners';
 import { local } from '../config.json';
 import Form from './Form';
 
-const Home = ({ blogs, setBlogs }) => {
+const NewTag = () => {
+  const [blogs, setBlogs] = useState([]);
+
   const [loading, setLoading] = useState(false);
-  // const location = useLocation();
-  // const { tag } = location.state;
+  const location = useLocation();
+  const { newtag } = location.state;
 
   let start, end;
   const fetchData = tag => {
@@ -26,7 +28,24 @@ const Home = ({ blogs, setBlogs }) => {
       })
       .catch(err => console.log(err));
   };
-  // useEffect(() => fetchData(tag), []);
+  const getData = () => {
+    setLoading(true);
+    // start = Date.now();
+    console.log(newtag);
+    axios
+      .get(`${local}/api/v1/medium/tag/${newtag}`)
+      .then(res => {
+        // end = Date.now();
+        // console.log(end - start);
+        setLoading(false);
+        setBlogs(res.data.data);
+        console.log(JSON.stringify(blogs));
+      })
+      .catch(err => console.log(err));
+  };
+
+  useEffect(getData, [newtag]);
+
   if (loading === true) {
     return (
       <React.Fragment>
@@ -90,4 +109,4 @@ const Home = ({ blogs, setBlogs }) => {
   }
 };
 
-export default Home;
+export default NewTag;

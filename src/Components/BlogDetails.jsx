@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { PulseLoader } from 'react-spinners';
-import qs from 'querystring';
-import { heroku, local } from '../config.json';
+
+import {  local } from '../config.json';
 
 const BlogDetails = () => {
   const location = useLocation();
@@ -11,10 +11,12 @@ const BlogDetails = () => {
   const [tags, setTags] = useState([]);
   const [para, setPara] = useState({ paragraph: [] });
   const [loading, setLoading] = useState(false);
+  const regex = new RegExp("^[a-zA-Z0-9_]*$");
+
 
   const fetchBlogs = url => {
     console.log(url);
-    const d = qs.stringify({ blogUrl: url });
+    
     let axiosConfig = {
       method: 'post',
       url: local + '/api/v1/medium/crawlBlogs',
@@ -65,11 +67,16 @@ const BlogDetails = () => {
           <tr>
             <th scope="col">Tags</th>
             <td>
-              {tags.map(tag => (
-                <Link to={{ pathname: '/', state: { tag } }}>
-                  <button className="suggestion-button">{tag}</button>
-                </Link>
-              ))}
+              {tags.map((tag, i) =>(
+                regex.test(tag) ? (
+                  <Link
+                    key={i}
+                    to={{ pathname: '/tag', state: { newtag: tag } }}
+                  >
+                    <button className="suggestion-button">{tag}</button>
+                  </Link>
+                ) : null)
+              )}
             </td>
           </tr>
         </tbody>

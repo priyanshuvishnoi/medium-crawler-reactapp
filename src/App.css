@@ -20,8 +20,8 @@ body {
 
 
 button {
-  background-color: #16cc9b !important;
-  border: 2px solid #16cc9b !important;
+  background-color: #000000 !important;
+  border: 2px solid #000000 !important;
   color: #ffffff !important;
   transition: all 0.25s linear !important;
   cursor: pointer;
@@ -35,12 +35,14 @@ button::after {
 }
 
 button:hover {
-  background-color: #f58551 !important;
-  border-color: #f58551 !important;
+  background-color: #707070 !important;
+  border-color: #807f7f !important;
+  color: rgb(0, 0, 0);
 }
 
 button:hover::after {
   right: -5px !important;
+  background-color: #707070 !important;
 }
 
 button:focus {
@@ -165,7 +167,7 @@ header .count {
   position: relative !important;
   left: calc(50% - 30px) !important;
   background: #fff !important;
-  border: 2px solid #ddd !important;
+  border: 2px solid rgb(0, 0, 0) !important;
   color: #7f7f7f !important;
   text-align: center !important;
   font: 600 1.5rem Helvetica, Arial, sans-serif !important;
@@ -173,7 +175,7 @@ header .count {
 
 .quantity > input:hover,
 .quantity > input:focus {
-  border-color: #f58551 !important;
+  border-color: #ffffff !important;
 }
 
 .close {
@@ -184,7 +186,7 @@ header .count {
 }
 
 .close:hover {
-  fill: #f58551 !important;
+  fill: #ffffff !important;
 }
 
 /* --- SUMMARY --- */
@@ -207,12 +209,12 @@ header .count {
   width: 80% !important;
   font-size: 1rem !important;
   padding: 0.5rem 0 0.5rem 1.8rem !important;
-  border: 2px solid #16cc9b !important;
+  border: 2px solid #000000 !important;
   border-radius: 2rem 0 0 2rem !important;
 }
 
 .promotion:hover > input {
-  border-color: #f58551 !important;
+  border-color: #ffffff !important;
 }
 
 .promotion > button {
@@ -223,8 +225,8 @@ header .count {
 }
 
 .promotion:hover > button {
-  border-color: #f58551 !important;
-  background-color: #f58551 !important;
+  border-color: #727272 !important;
+  background-color: #707070 !important;
 }
 
 .promotion > button::after {
@@ -350,15 +352,15 @@ form {
   box-shadow: 5px 5px 15px #00000049, -5px -5px 15px #00000049 !important;
   border-radius: 10px !important;
   color: #000000 !important;
-  background-color: #ffffff8a !important;
+  background-color: #ffffffaf !important;
   min-height: 200px !important;
   min-width: 100% !important;
   transition: all 0.15s linear !important;
-  border: 1px solid #16cc9b;
+  border: 1px solid #000000;
   cursor: pointer;
 }
 .card:hover {
-  background-color: #f58551de !important;
+  background-color: #ffffff !important;
 }
 
 .suggestion-button {

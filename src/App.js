@@ -4,6 +4,7 @@ import './App.css';
 import BlogDetails from './Components/BlogDetails';
 
 import Home from './Components/Home';
+import NewTag from './Components/newtag';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -21,12 +22,11 @@ const App = () => {
                   path="/"
                   component={() => <Home blogs={blogs} setBlogs={setBlogs} />}
                 />
+                <Route exact path="/details" component={BlogDetails} />
                 <Route
                   exact
-                  path="/details"
-                  component={() => (
-                    <BlogDetails blogs={blogs} setBlogs={setBlogs} />
-                  )}
+                  path="/tag"
+                  component={NewTag}
                 />
               </Switch>
             </Router>
