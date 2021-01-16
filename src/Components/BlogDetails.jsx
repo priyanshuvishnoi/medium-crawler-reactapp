@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { PulseLoader } from 'react-spinners';
-
-import {  local } from '../config.json';
+import ErrorComponent from './Error';
+import { local } from '../config.json';
 
 const BlogDetails = () => {
   const location = useLocation();
   const { url, details, creator, title } = location.state;
   const [tags, setTags] = useState([]);
+  const [showError, setShowError] = useState(false);
   const [para, setPara] = useState({ paragraph: [] });
   const [loading, setLoading] = useState(false);
-  const regex = new RegExp("^[a-zA-Z0-9_]*$");
-
+  const regex = new RegExp('^[a-zA-Z0-9_]*$');
 
   const fetchBlogs = url => {
-    console.log(url);
     
+
     let axiosConfig = {
       method: 'post',
       url: local + '/api/v1/medium/crawlBlogs',
@@ -31,8 +31,12 @@ const BlogDetails = () => {
     axios(axiosConfig)
       .then(res => {
         setLoading(false);
-        console.log(res.data.data);
-        setPara(res.data.data);
+        
+        if (res.data.data.paragraph == '') {
+          setShowError(true);
+        } else {
+          setPara(res.data.data);
+        }
         setTags(res.data.data.tags);
       })
       .catch(err => console.log(err));
@@ -59,7 +63,7 @@ const BlogDetails = () => {
           <tr>
             <th scope="col">URL</th>
             <td>
-              <a href={url} className="text-light">
+              <a href={url} className="text-light" target="blank">
                 {url}
               </a>
             </td>
@@ -67,15 +71,21 @@ const BlogDetails = () => {
           <tr>
             <th scope="col">Tags</th>
             <td>
-              {tags.map((tag, i) =>(
-                regex.test(tag) ? (
+              {tags.map((tag, i) =>
+                regex.test(tag) ||
+                tag !== 'About' ||
+                tag !== 'about' ||
+                tag !== 'ABOUT' ||
+                tag !== 'HOME' ||
+                tag !== 'Home' ||
+                tag !== 'home' ? (
                   <Link
                     key={i}
                     to={{ pathname: '/tag', state: { newtag: tag } }}
                   >
                     <button className="suggestion-button">{tag}</button>
                   </Link>
-                ) : null)
+                ) : null
               )}
             </td>
           </tr>
@@ -97,6 +107,12 @@ const BlogDetails = () => {
             color="#ffffff"
           />
         </React.Fragment>
+      ) : showError ? (
+        <ErrorComponent
+          error={
+            'Cannot crawl blog content because it is on different subdomain and have different css-classes and html-tags, visit url provided above to check orginal blog.'
+          }
+        />
       ) : (
         para.paragraph.map((paragraph, index) => (
           <p key={index} style={{ fontSize: '20px' }}>
