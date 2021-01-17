@@ -6,17 +6,18 @@ import ErrorComponent from './Error';
 import { local } from '../config.json';
 
 const BlogDetails = () => {
+  document.title = 'Blog Details';
   const location = useLocation();
   const { url, details, creator, title } = location.state;
   const [tags, setTags] = useState([]);
   const [showError, setShowError] = useState(false);
   const [para, setPara] = useState({ paragraph: [] });
   const [loading, setLoading] = useState(false);
+  const [responses, setResponses] = useState('');
+  const [claps, setClaps] = useState('');
   const regex = new RegExp('^[a-zA-Z0-9_]*$');
 
   const fetchBlogs = url => {
-    
-
     let axiosConfig = {
       method: 'post',
       url: local + '/api/v1/medium/crawlBlogs',
@@ -31,13 +32,15 @@ const BlogDetails = () => {
     axios(axiosConfig)
       .then(res => {
         setLoading(false);
-        
+
         if (res.data.data.paragraph == '') {
           setShowError(true);
         } else {
           setPara(res.data.data);
         }
         setTags(res.data.data.tags);
+        setClaps(res.data.data.clap);
+        setResponses(res.data.data.response);
       })
       .catch(err => console.log(err));
   };
@@ -69,16 +72,24 @@ const BlogDetails = () => {
             </td>
           </tr>
           <tr>
+            <th scope="col">Responses</th>
+            <td>{responses}</td>
+          </tr>
+          <tr>
+            <th scope="col">Claps</th>
+            <td>{claps}</td>
+          </tr>
+          <tr>
             <th scope="col">Tags</th>
             <td>
               {tags.map((tag, i) =>
-                regex.test(tag) ||
-                tag !== 'About' ||
-                tag !== 'about' ||
-                tag !== 'ABOUT' ||
-                tag !== 'HOME' ||
-                tag !== 'Home' ||
-                tag !== 'home' ? (
+                regex.test(tag) &&
+                (tag !== 'About' ||
+                  tag !== 'about' ||
+                  tag !== 'ABOUT' ||
+                  tag !== 'HOME' ||
+                  tag !== 'Home' ||
+                  tag !== 'home') ? (
                   <Link
                     key={i}
                     to={{ pathname: '/tag', state: { newtag: tag } }}
@@ -114,11 +125,13 @@ const BlogDetails = () => {
           }
         />
       ) : (
-        para.paragraph.map((paragraph, index) => (
-          <p key={index} style={{ fontSize: '20px' }}>
-            {paragraph}
-          </p>
-        ))
+        para.paragraph.map((paragraph, index) =>
+          paragraph != 'Written by' ? (
+            <p key={index} style={{ fontSize: '20px' }}>
+              {paragraph}
+            </p>
+          ) : null
+        )
       )}
     </React.Fragment>
   );

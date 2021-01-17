@@ -9,7 +9,7 @@ import NewTag from './Components/newtag';
 const App = () => {
   const [blogs, setBlogs] = useState([]);
 
-  document.title = 'Web Crawler';
+  document.title = 'Medium Crawler';
   return (
     <React.Fragment>
       <div className="area">
@@ -23,16 +23,29 @@ const App = () => {
                   component={() => <Home blogs={blogs} setBlogs={setBlogs} />}
                 />
                 <Route exact path="/details" component={BlogDetails} />
-                <Route
-                  exact
-                  path="/tag"
-                  component={NewTag}
-                />
+                <Route exact path="/tag" component={NewTag} />
               </Switch>
             </Router>
           </section>
         </div>
         <ul className="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
           <li></li>
           <li></li>
           <li></li>
